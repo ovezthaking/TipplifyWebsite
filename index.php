@@ -38,7 +38,7 @@ if ($user_id) {
 <body>
   <nav>
     <a style="text-decoration: none;" class="nav" href="index.php">Strona Główna</a>
-    <a style="text-decoration: none;" class="nav" href="dodaj_przepis.php">Dodaj Przepis</a>
+    <a style="text-decoration: none;" class="nav" href="add_recipe.php">Dodaj Przepis</a>
     <?php if ($user_id ==null): ?><a style="text-decoration: none;" class="nav" href="login.php">Zaloguj </a><?php endif; ?>
     <a style="text-decoration: none;" class="nav" href="register.php">Zarejestruj</a>
     <a style="text-decoration: none; " class="nav" href="settings.php">Ustawienia Konta</a>
@@ -69,7 +69,7 @@ if ($user_id) {
       $recent_result = $conn->query($recent_sql);
       if ($recent_result->num_rows > 0) {
         while ($row = $recent_result->fetch_assoc()) {
-          echo "<li style='width:75%;'><a id='". $row["idp"] . "' href='przepis.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br><br>" . $row["data"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
+          echo "<li style='width:75%;'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br><br>" . $row["data"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
         }
       } else {
         echo "Brak ostatnio odwiedzanych przepisów.";
@@ -86,7 +86,7 @@ if ($user_id) {
       $popular_result = $conn->query($popular_sql);
       if ($popular_result->num_rows > 0) {
         while ($row = $popular_result->fetch_assoc()) {
-          echo "<li style='width:75%'><a id='". $row["idp"] . "' href='przepis.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br> ". "Odwiedziny: " . $row["ilosc_wejsc"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
+          echo "<li style='width:75%'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br> ". "Odwiedziny: " . $row["ilosc_wejsc"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
         }
       } else {
         echo "Brak najczęściej odwiedzanych przepisów.";
@@ -106,7 +106,7 @@ if ($user_id) {
         $result = $conn->query($sql);
         
         while($row = $result->fetch_assoc()) {
-          echo "<li><a id='". $row["idp"] . "' href='przepis.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a></li>";
+          echo "<li><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a></li>";
         }
       } else {
         echo "Brak przepisów";
