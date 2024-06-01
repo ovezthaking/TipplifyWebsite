@@ -40,13 +40,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     if (isset($_POST['delete_account'])) {
-        $delete_sql = "DELETE FROM uzytkownicy WHERE idu='$user_id'";
-        if ($conn->query($delete_sql) === TRUE) {
-            echo "Konto zostało usunięte.";
-            session_destroy();
-            exit();
+        $password = $_POST['password']; 
+        $sql = "SELECT haslo FROM uzytkownicy WHERE idu='$user_id'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        if ($password == $row['haslo']) { 
+            $delete_sugerowanie_sql = "DELETE FROM sugerowanie WHERE u_id='$user_id' ";
+            if ($conn->query($delete_sugerowanie_sql) === TRUE) {
+                $delete_sql = "DELETE FROM uzytkownicy WHERE idu='$user_id' ";
+                if ($conn->query($delete_sql) === TRUE) {
+                    echo "Konto zostało usunięte.";
+                    session_destroy();
+                    echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "index.php";
+                            }, 2000);
+                          </script>';
+                    exit();  
+                } else {
+                    echo "Błąd: " . $conn->error;
+                }
+            } else {
+                echo "Błąd: " . $conn->error;
+            }
         } else {
-            echo "Błąd: " . $conn->error;
+            echo "Nieprawidłowe hasło."; 
         }
     }
     
@@ -73,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p> Witamy na stronie Tipplify, na której znajdziesz przepisy popularnych drinków, a także będziesz mógł pochwalić się własnymi recepturami!</p>
         </nav>
         <div class="logo">
-        <img src="Assets\LOGO\Square44x44Logo.scale-200.png" max-width="88px" max-height="88px"  id="logo" alt="logoo" >
+        <img src="Assets\LOGO\Square44x44Logo.scale-200.png" max-width="88px" max-height="88px"  id="logo" alt="logo" >
         <br>
         <h2>Tipplify</h2>
         </div>
@@ -93,9 +112,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="submit" value="Zaktualizuj dane">
         </form>
         
-        <form method="post" style="margin-top:10px; ">
+        <form method="post" style="margin-top:20px; padding-top: 10px;">
+                <label  style="margin-top:20px;" for="password" >Aby usunąć konto wpisz hasło:</label><br>
+                <input style="margin-top:10px;" type="password" name="password" required>
                 <input type="hidden" name="delete_account" value="1">
-                <input type="submit" value="Usuń konto" style="background-color: red; color: white;">
+                <input type="submit" value="Usuń konto" style="background-color: red; color: white; border-color: white;">
         </form>
 </body>
 </html>
