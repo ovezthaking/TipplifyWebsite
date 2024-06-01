@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #000000;
+    color: white;
+}
+
+h1 {
+    color: #bebcbc;
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    width: 90%;
+}
+
+li {
+    background-color: #0b050571;
+    color: white;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    width: auto;
+}
+
+a[id^='1'], a[id^='2'], a[id^='3'], a[id^='4'], a[id^='5'], a[id^='6'], a[id^='7'], a[id^='8'], a[id^='9'] {
+    text-decoration: none;
+    border-radius: 8%;
+    background-color: #ffffff9e;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+p {
+    white-space: pre-wrap;
+}
+
+#opis {
+    margin-top: 6%;
+    float: right;
+    max-width: 58%;
+    padding: 1%;
+    
+}
+
+.logo {
+    width: 88px;
+    height: 140px ;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    background-color: #ffffff17;
+    
+}
+
+h2 {
+    width: 88px;
+    text-align: center;
+    color: #000000;
+
+}
+
+.menu {
+    margin-top: 20px;
+    width: 20%;
+}
+
+nav {
+   float: right;
+   width: 81%;
+   background-color: #00000029;
+   height: 147px;
+   border-radius: 1%;
+   padding: 20px;
+   
+}
+
+.nav {
+    margin-left: 25px;
+    margin-right: 25px;
+    color: #ffffff;
+    font-size:x-large;
+    
+    margin-top: 50%;
+}
+
+.reccomend {
+    float: right;
+    width: 500px;
+    
+}

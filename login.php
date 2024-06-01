@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a style="text-decoration: none;" class="nav" href="index.php">Strona Główna</a>
         <a style="text-decoration: none;" class="nav" href="add_recipe.php">Dodaj Przepis</a>
         <?php if ($user_id ==null): ?><a style="text-decoration: none;" class="nav" href="login.php">Zaloguj </a><?php endif; ?>
-        <a style="text-decoration: none;" class="nav" href="register.php">Zarejestruj</a>
+        <?php if ($user_id ==null): ?><a style="text-decoration: none;" class="nav" href="register.php">Zarejestruj</a><?php endif; ?>
         <a style="text-decoration: none; " class="nav" href="settings.php">Ustawienia Konta</a>
         <?php if ($user_id): ?><a style="text-decoration: none; " class="nav" href="logout.php">Wyloguj</a><?php endif; ?>
         <br><br><br><br>

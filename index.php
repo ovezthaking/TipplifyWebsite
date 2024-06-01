@@ -40,7 +40,7 @@ if ($user_id) {
     <a style="text-decoration: none;" class="nav" href="index.php">Strona Główna</a>
     <a style="text-decoration: none;" class="nav" href="add_recipe.php">Dodaj Przepis</a>
     <?php if ($user_id ==null): ?><a style="text-decoration: none;" class="nav" href="login.php">Zaloguj </a><?php endif; ?>
-    <a style="text-decoration: none;" class="nav" href="register.php">Zarejestruj</a>
+    <?php if ($user_id==null): ?><a style="text-decoration: none;" class="nav" href="register.php">Zarejestruj</a><?php endif; ?>
     <a style="text-decoration: none; " class="nav" href="settings.php">Ustawienia Konta</a>
     <?php if ($user_id): ?><a style="text-decoration: none; " class="nav" href="logout.php">Wyloguj</a><?php endif; ?>
     <br><br><br><br>
@@ -63,8 +63,8 @@ if ($user_id) {
   
     
   <div>
-    <ul style="float: right; width:60%; margin-top:50px;">
-    <h2 style="color:white">Ostatnio odwiedzone przepisy</h2>
+    <ul style="float: right; width:60%; margin-top:70px;">
+    <h2 style="color:white;text-wrap:unset; width:100%;" >Ostatnio odwiedzone przepisy</h2>
       <?php
       $recent_result = $conn->query($recent_sql);
       if ($recent_result->num_rows > 0) {
@@ -81,7 +81,7 @@ if ($user_id) {
   
   <div>
     <ul style="float: right; width:60%;">
-    <h2 style="color:white">Najczęściej odwiedzane przepisy</h2>
+    <h2 style="color:white; text-wrap:unset; width:100%;">Najczęściej odwiedzane przepisy</h2>
       <?php
       $popular_result = $conn->query($popular_sql);
       if ($popular_result->num_rows > 0) {
