@@ -17,36 +17,57 @@ $user_result = $conn->query($user_sql);
 $user_row = $user_result->fetch_assoc(); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_login = $_POST['current_login'];
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-
-    $sql = "SELECT haslo FROM uzytkownicy WHERE idu='$user_id'";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-
-    if ($current_password == $row['haslo']) {
-        $update_sql = "UPDATE uzytkownicy SET login='$new_login', haslo='$new_password', imie='$firstname', nazwisko='$lastname' WHERE idu='$user_id'";
-        $_SESSION['username'] = $new_login;
-        if ($conn->query($update_sql) === TRUE) {
-            echo "Zaktualizowano dane konta.";
-        } else {
-            echo "Błąd: " . $conn->error;
-        }
-    } else {
-        echo "Nieprawidłowe obecne hasło.";
-    }
+    if (isset($_POST['new_password'])) {
+        $new_login = $_POST['current_login'];
+        $current_password = $_POST['current_password'];
+        $new_password = $_POST['new_password'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
     
-    if (isset($_POST['delete_account'])) {
-        $delete_sql = "DELETE FROM uzytkownicy WHERE idu='$user_id'";
-        if ($conn->query($delete_sql) === TRUE) {
-            echo "Konto zostało usunięte.";
-            session_destroy();
-            exit();
+
+        $sql = "SELECT haslo FROM uzytkownicy WHERE idu='$user_id'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        if ($current_password == $row['haslo']) {
+            $update_sql = "UPDATE uzytkownicy SET login='$new_login', haslo='$new_password', imie='$firstname', nazwisko='$lastname' WHERE idu='$user_id'";
+            $_SESSION['username'] = $new_login;
+            if ($conn->query($update_sql) === TRUE) {
+                echo "Zaktualizowano dane konta.";
+            } else {
+                echo "Błąd: " . $conn->error;
+            }
         } else {
-            echo "Błąd: " . $conn->error;
+            echo "Nieprawidłowe obecne hasło.";
+        }
+    }
+    if (isset($_POST['delete_account'])) {
+        $password = $_POST['password']; 
+        $sql = "SELECT haslo FROM uzytkownicy WHERE idu='$user_id'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        if ($password == $row['haslo']) { 
+            $delete_sugerowanie_sql = "DELETE FROM sugerowanie WHERE u_id='$user_id' ";
+            if ($conn->query($delete_sugerowanie_sql) === TRUE) {
+                $delete_sql = "DELETE FROM uzytkownicy WHERE idu='$user_id' ";
+                if ($conn->query($delete_sql) === TRUE) {
+                    echo "Konto zostało usunięte.";
+                    session_destroy();
+                    echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "index.php";
+                            }, 2000);
+                          </script>';
+                    exit();  
+                } else {
+                    echo "Błąd: " . $conn->error;
+                }
+            } else {
+                echo "Błąd: " . $conn->error;
+            }
+        } else {
+            echo "Nieprawidłowe hasło."; 
         }
     }
     
@@ -79,12 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <h1>Ustawienia Konta</h1>
         <?php echo "Zalogowano jako ". $user_row["login"] ; ?>
-        <form method="post" style="margin-top: 30px;">
+        <form method="post" style="margin-top: 30px;" name="modify">
                 <label for="current_login">Login:</label><br>
                 <input type="text" id="current_login" name="current_login" required value="<?php echo $user_row["login"]; ?>"><br>
                 <label for="current_password">Obecne hasło:</label><br>
                 <input type="password" id="current_password" name="current_password" required><br>
-                <label for="new_password">Nowe hasło:</label><br>
+                <label for="new_password">Nowe hasło/Powtórz hasło:</label><br>
                 <input type="password" id="new_password" name="new_password" required><br>
                 <label for="firstname">Imię:</label><br>
                 <input type="text" id="firstname" name="firstname" value="<?php echo $user_row["imie"]; ?>"><br> 
@@ -93,9 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="submit" value="Zaktualizuj dane">
         </form>
         
-        <form method="post" style="margin-top:10px; ">
+        <form method="post" style="margin-top:20px; padding-top: 10px;">
+                <label  style="margin-top:20px;" for="password" >Aby usunąć konto wpisz hasło:</label><br>
+                <input style="margin-top:10px;" type="password" name="password" required>
                 <input type="hidden" name="delete_account" value="1">
-                <input type="submit" value="Usuń konto" style="background-color: red; color: white;">
+                <input type="submit" value="Usuń konto" style="background-color: red; color: white; border-color: white;">
         </form>
 </body>
 </html>

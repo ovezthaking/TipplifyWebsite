@@ -24,7 +24,7 @@ if ($recipe_result->num_rows > 0) {
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $recipe["nazwa"]; ?></title>
+    <title>Edytuj przepis - <?php echo $recipe["nazwa"]; ?></title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -37,17 +37,22 @@ if ($recipe_result->num_rows > 0) {
     <?php if ($user_id): ?><a style="text-decoration: none; " class="nav" href="logout.php">Wyloguj</a><?php endif; ?>
     <br><br><br><br>
     <p> Witamy na stronie Tipplify, na której znajdziesz przepisy popularnych drinków, a także będziesz mógł pochwalić się własnymi recepturami!</p>
-  </nav>
-  <div class="logo">
-  <img src="Assets\LOGO\Square44x44Logo.scale-200.png" max-width="88px" max-height="88px"  id="logo" alt="logo" >
-  <br>
-  <h2>Tipplify</h2>
-  </div>
-    <h1><?php echo $recipe["nazwa"]; ?></h1>
-    <p><?php echo "<div id='opis'>" . nl2br($recipe["opis"] . "</div>"); ?></p>
-    <img src="<?php echo $recipe["zdjecie_path"]; ?>" alt="<?php echo $recipe["nazwa"]; ?>">
-    <div id="ingredients">
-    <h2 style="color:white;">Składniki</h2>
+</nav>
+<div class="logo"></div>
+    <img src="Assets\LOGO\Square44x44Logo.scale-200.png" max-width="88px" max-height="88px"  id="logo" alt="logo" >
+    <br>
+    <h2>Tipplify</h2>
+</div>
+<h1>Edytuj przepis - <?php echo $recipe["nazwa"]; ?></h1>
+<form action="update_recipe.php" method="post">
+    <input type="hidden" name="recipe_id" value="<?php echo $recipe_id; ?>">
+    <label for="nazwa">Nazwa:</label>
+    <input type="text" name="nazwa" value="<?php echo $recipe["nazwa"]; ?>"><br><br>
+    <label for="opis">Opis:</label>
+    <textarea name="opis"><?php echo $recipe["opis"]; ?></textarea><br><br>
+    <label for="zdjecie_path">Ścieżka zdjęcia:</label>
+    <input type="text" name="zdjecie_path" value="<?php echo $recipe["zdjecie_path"]; ?>"><br><br>
+    <h2>Składniki:</h2>
     <ul>
         <?php
         if ($ingredients_result->num_rows > 0) {
@@ -59,26 +64,9 @@ if ($recipe_result->num_rows > 0) {
         }
         ?>
     </ul>
-    </div>
+    <label for="nowy_skladnik">Nowy składnik:</label>
+    <input type="text" name="nowy_skladnik"><br><br>
+    <input type="submit" value="Zapisz zmiany">
+</form>
 </body>
 </html>
-
-<?php
-if ($user_id): 
-$dbuser_id= $_SESSION['user_id'];
-$dbrecipe_id = $recipe["idp"];
-if ($user_id) {
-    $check_sql = "SELECT * FROM sugerowanie WHERE p_id = $dbrecipe_id AND u_id = $dbuser_id";
-    $check_result = $conn->query($check_sql);
-    if ($check_result->num_rows > 0) {
-        $update_sql = "UPDATE sugerowanie SET ilosc_wejsc = ilosc_wejsc + 1, data = NOW() WHERE p_id = $dbrecipe_id AND u_id = $dbuser_id";
-        $conn->query($update_sql);
-    } else {
-        $insert_sql = "INSERT INTO sugerowanie (p_id, u_id, ilosc_wejsc, data) VALUES ($dbrecipe_id, $dbuser_id, 1, NOW())";
-        $conn->query($insert_sql);
-    }
-}
-endif;
-$conn->close();
-?>
-

@@ -9,6 +9,7 @@ h1 {
     color: #bebcbc;
     margin-top: 50px;
     margin-left: 10px;
+    
 }
 
 ul {
@@ -36,10 +37,15 @@ a[id^='1'], a[id^='2'], a[id^='3'], a[id^='4'], a[id^='5'], a[id^='6'], a[id^='7
     border-right: 1px solid #333333;
     border-bottom: 1px solid #333333;
     border-left: 1px solid #CCCCCC;
+    
+
 }
+
+   
 
 a:hover {
     text-decoration: underline;
+    
 }
 
 img {
