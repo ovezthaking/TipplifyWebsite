@@ -6,19 +6,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Obsługa formularza dodawania przepisu
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nazwa = $_POST["nazwa"];
     $opis = $_POST["opis"];
     $skladniki = $_POST["skladniki"];
     $photo_path = $_POST["zdjecie"];
 
-    // Dodawanie przepisu do tabeli "przepisy"
     $sql = "INSERT INTO przepisy (nazwa, opis, zdjecie_path) VALUES ('$nazwa', '$opis', '$photo_path')";
     if ($conn->query($sql) === TRUE) {
         $przepisId = $conn->insert_id;
 
-        // Dodawanie składników przepisu do tabeli "detal_przepis"
         foreach ($skladniki as $skladnik) {
             $s_id = $skladnik["s_id"];
             $ilosc = $skladnik["ilosc"];
@@ -78,7 +75,8 @@ if ($result->num_rows > 0) {
         <label for="zdjecie">Ścieżka do zdjęcia:</label>
         <input type="text" name="zdjecie" required><br><br>
 
-        <label for="skladniki">Składniki:</label><br>
+        <label for="skladniki">Składniki:</label>
+        <label style="margin-left:11.5%;" for="ilosc">Ilość:</label><br>
         <div id="skladniki-container"></div>
             <select name="skladniki[0][s_id]">
                 <?php foreach ($skladniki as $id => $skladnik) { ?>
@@ -86,6 +84,7 @@ if ($result->num_rows > 0) {
                     
                 <?php } ?>
             </select>
+            
             <input type="text" name="skladniki[0][ilosc]" required><br><br>
             
         </div>
@@ -93,7 +92,14 @@ if ($result->num_rows > 0) {
         <button type="button" onclick="deleteSkladnik()" style="color:white; background-color:red; border-color:white;">Usuń składnik</button><br><br>
         <input type="submit" value="Dodaj przepis">
     </form>
+    <br>
+    <form method="POST" action="add_ingredient.php" target="_blank">
+        <p><label for="question">Nie znalazłeś składnika?</label><br>
+        <input type="submit" value="Dodaj własny składnik"></input></p>
+    </form>
 
+
+    
     <script>
         var skladnikiCount = 1;
 
