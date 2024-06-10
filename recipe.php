@@ -60,6 +60,20 @@ if ($recipe_result->num_rows > 0) {
         ?>
     </ul>
     </div>
+    
+    <br> 
+    <?php if ($user_id): ?>
+        <a style="border: 1px white solid; padding: 1%; color:white; text-decoration:none; background-color: #ffffff17;" class="adddel" href="modify_recipe.php?id=<?php echo $recipe_id; ?>">Edytuj</a>
+        <a style="border: 1px white solid; padding: 1%; color:red; text-decoration:none; background-color: #ffffff17;" class="adddel" href="#" onclick="confirmDelete(<?php echo $recipe_id; ?>)">Usuń</a>
+    <?php endif; ?>
+    
+    <script>
+        function confirmDelete(recipeId) {
+            if (confirm("Czy na pewno chcesz usunąć przepis?")) {
+                window.location.href = "delete_recipe.php?id=" + recipeId;
+            }
+        }
+    </script>
 </body>
 </html>
 
