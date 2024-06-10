@@ -69,7 +69,7 @@ if ($user_id) {
       $recent_result = $conn->query($recent_sql);
       if ($recent_result->num_rows > 0) {
         while ($row = $recent_result->fetch_assoc()) {
-          echo "<li style='width:75%;'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br><br>" . $row["data"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
+          echo "<li style='width:75%;'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<a style='margin-left:20px;font-size:10px;text-decoration: none;border-radius: 8%;background-color: #ffffff43;color: black;padding: 2px 6px 2px 6px;border-top: 1px solid #ffffff43;border-right: 1px solid #ffffff43;border-bottom: 1px solid #ffffff43;border-left: 1px solid #ffffff43;' href='dont_recommend.php?id=" . $row["idp"] . "'>Nie sugeruj</a>" . "<br><br>" . $row["data"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
         }
       } else {
         echo "Brak ostatnio odwiedzanych przepisów.";
@@ -86,7 +86,9 @@ if ($user_id) {
       $popular_result = $conn->query($popular_sql);
       if ($popular_result->num_rows > 0) {
         while ($row = $popular_result->fetch_assoc()) {
-          echo "<li style='width:75%'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>". "<br> ". "Odwiedziny: " . $row["ilosc_wejsc"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
+          
+          echo "<li style='width:75%'><a id='". $row["idp"] . "' href='recipe.php?id=" . $row["idp"] . "'>" . $row["nazwa"] . "</a>"." <a style='margin-left:20px;font-size:10px;text-decoration: none;border-radius: 8%;background-color: #ffffff43;color: black;padding: 2px 6px 2px 6px;border-top: 1px solid #ffffff43;border-right: 1px solid #ffffff43;border-bottom: 1px solid #ffffff43;border-left: 1px solid #ffffff43;' href='dont_recommend.php?id=" . $row["idp"] . "'>Nie sugeruj</a>". "<br> ". "Odwiedziny: " . $row["ilosc_wejsc"] . "<img style='margin-left:60%;width:150px; height:150px;' src='" . $row["zdjecie_path"] . "' alt='zdjecie_przepisu'></li>";
+        
         }
       } else {
         echo "Brak najczęściej odwiedzanych przepisów.";
